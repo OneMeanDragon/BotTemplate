@@ -20,8 +20,15 @@ namespace Bot {
 	MainWindowC::MainWindowC() {
 		MainInstance = NULL;
 		MainHwnd = NULL;
+		MainIcon = NULL;
+
+		mMaximized = FALSE;
+		Tray = Bot::Interface::TrayC::Instance();
 	}
-	MainWindowC::~MainWindowC() {}
+	MainWindowC::~MainWindowC() {
+		Bot::Interface::TrayC::Release();
+		Tray = NULL;
+	}
 
 	//Applications Hinstance
 	void MainWindowC::hInst(const HINSTANCE hInstance) { //Set hInstance
@@ -73,6 +80,13 @@ namespace Bot {
 
 
 		case WM_MOVE: {	return TRUE; }
+		case WM_TRAYMESSAGE: {
+			// Restore the window if it has been clicked in the task bar
+			if (lParam == WM_LBUTTONDOWN || lParam == WM_RBUTTONDOWN) {
+				Instance()->Tray->Restore(hWnd, Instance()->mMaximized);
+			}
+			return TRUE;
+		}
 
 		case WM_CTLCOLOREDIT:
 		case WM_CTLCOLORSTATIC:
@@ -90,6 +104,12 @@ namespace Bot {
 	}
 	int MainWindowC::OnInitalization(HWND hWnd)
 	{
+		//set icon
+		MainIcon = LoadIcon(hInst(), MAKEINTRESOURCE(IDI_ICON1));
+		SendMessage(hWnd, WM_SETICON, ICON_SMALL, (LPARAM)MainIcon);
+		SendMessage(hWnd, WM_SETICON, ICON_BIG, (LPARAM)MainIcon);
+
+		//set font
 		HFONT hFont = CreateFont(14, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Consolas"));
 		SendMessage(hWnd, WM_SETFONT, WPARAM(hFont), TRUE);
 		return TRUE;
@@ -105,11 +125,30 @@ namespace Bot {
 	int MainWindowC::OnClose(HWND hWnd) {
 		if (MessageBox(hWnd, TEXT("Are you sure you want to exit?"), TEXT("Question:"), MB_YESNO) == IDYES)
 		{
+			if (Tray->InTray()) { Tray->Remove(hWnd); }
 			return DestroyWindow(hWnd);
 		}
 		return FALSE;
 	}
 	int MainWindowC::OnSize(HWND hWnd, WPARAM wParam) {
+		// Hide our window if we get minimized
+		switch (wParam)
+		{
+			case SIZE_MINIMIZED: {
+				Tray->Add(hWnd);
+				break;
+			}
+			case SIZE_RESTORED: {
+				mMaximized = FALSE;
+				break;
+			} //window calls restored when sizeing
+			case SIZE_MAXIMIZED: { // No longer needed as the size routien now works perfect
+				mMaximized = TRUE;
+				break;
+			}
+			//case SIZE_MAXSHOW: { return TRUE; }
+			//case SIZE_MAXHIDE: { return TRUE; }
+		}
 		return TRUE;// myWindows.ResizeWindows();
 	}
 	int MainWindowC::OnNotify(HWND hWnd, WPARAM wParam, LPARAM lParam) {

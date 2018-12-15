@@ -1,15 +1,21 @@
 #ifndef _MAINWINDOW_H
 #define _MAINWINDOW_H
 
-#include "includes.h"
+#include "Tray.h"
 
 namespace Bot {
 
 	class MainWindowC {
 	private:
 		static MainWindowC* sInstance;
+		HICON MainIcon;
 		HINSTANCE MainInstance;
 		HWND MainHwnd;
+
+		BOOL mMaximized;
+
+		Bot::Interface::TrayC* Tray = NULL;
+
 	public:
 		static MainWindowC* Instance();
 		static void Release();
