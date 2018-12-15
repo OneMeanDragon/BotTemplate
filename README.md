@@ -1,3 +1,3 @@
 # BotTemplate
 
-WainWindowC - Singleton class to the main dialog.
+MainWindowC - Singleton class to the main dialog.
