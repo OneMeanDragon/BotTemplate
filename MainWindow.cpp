@@ -24,10 +24,14 @@ namespace Bot {
 
 		mMaximized = FALSE;
 		Tray = Bot::Interface::TrayC::Instance();
+		MyWindows = new wResize();
 	}
 	MainWindowC::~MainWindowC() {
 		Bot::Interface::TrayC::Release();
 		Tray = NULL;
+
+		delete MyWindows;
+		MyWindows = NULL;
 	}
 
 	//Applications Hinstance
@@ -112,6 +116,10 @@ namespace Bot {
 		//set font
 		HFONT hFont = CreateFont(14, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("Consolas"));
 		SendMessage(hWnd, WM_SETFONT, WPARAM(hFont), TRUE);
+
+		//set windows in the anchor class
+		mChatInput = GetDlgItem(m_hWnd(), IDC_MAININPUTBOX);
+		MyWindows->AddWindow(m_hWnd(), mChatInput, false, true, true, true);
 		return TRUE;
 	}
 	int MainWindowC::OnPaint(HWND hWnd) {
@@ -131,7 +139,7 @@ namespace Bot {
 		return FALSE;
 	}
 	int MainWindowC::OnSize(HWND hWnd, WPARAM wParam) {
-		// Hide our window if we get minimized
+
 		switch (wParam)
 		{
 			case SIZE_MINIMIZED: {
@@ -149,7 +157,8 @@ namespace Bot {
 			//case SIZE_MAXSHOW: { return TRUE; }
 			//case SIZE_MAXHIDE: { return TRUE; }
 		}
-		return TRUE;// myWindows.ResizeWindows();
+
+		return MyWindows->ResizeWindows();
 	}
 	int MainWindowC::OnNotify(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 		return TRUE;

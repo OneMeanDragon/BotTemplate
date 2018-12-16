@@ -3,6 +3,7 @@
 
 #include "Tray.h"
 
+
 namespace Bot {
 
 	class MainWindowC {
@@ -10,11 +11,15 @@ namespace Bot {
 		static MainWindowC* sInstance;
 		HICON MainIcon;
 		HINSTANCE MainInstance;
-		HWND MainHwnd;
+		HWND MainHwnd = NULL;
+
+		//Interface windows.
+		HWND mChatInput = NULL;
 
 		BOOL mMaximized;
 
 		Bot::Interface::TrayC* Tray = NULL;
+		wResize* MyWindows = NULL;
 
 	public:
 		static MainWindowC* Instance();

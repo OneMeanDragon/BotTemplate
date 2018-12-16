@@ -1,5 +1,5 @@
 #include "Tray.h"
-
+#include <string>
 
 namespace Bot
 {
@@ -42,6 +42,7 @@ namespace Bot
 			Shell_NotifyIcon(NIM_ADD, &nid);
 			mTrayed = TRUE;
 		}
+
 		void TrayC::Remove(HWND hWnd) {
 			NOTIFYICONDATA nid;
 			nid.cbSize = sizeof(NOTIFYICONDATA);
@@ -50,6 +51,7 @@ namespace Bot
 			Shell_NotifyIcon(NIM_DELETE, &nid);
 			mTrayed = FALSE;
 		}
+
 		void TrayC::Restore(HWND hWnd, BOOL IS_MAX) {
 			if (IS_MAX) { 
 				ShowWindow(hWnd, SW_SHOWMAXIMIZED); 
@@ -59,6 +61,7 @@ namespace Bot
 			SetForegroundWindow(hWnd);
 			Remove(hWnd);
 		}
+
 		BOOL TrayC::InTray() {
 			return mTrayed;
 		}
