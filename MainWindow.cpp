@@ -78,9 +78,8 @@ namespace Bot {
 
 		switch (message)
 		{
-		case WM_SETFONT: {
-			return TRUE;
-		}
+		case WM_TIMER: { return Instance()->OnTimer(wParam, lParam); }
+		case WM_SETFONT: { return TRUE;	}
 		case WM_COMMAND: { return Instance()->OnCommand(hWnd, wParam, lParam); }
 		case WM_INITDIALOG: { return Instance()->OnInitalization(hWnd);	}
 		case WM_PAINT: { return Instance()->OnPaint(hWnd); }
@@ -171,6 +170,9 @@ namespace Bot {
 	}
 	int MainWindowC::OnNotify(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 		return TRUE;
+	}
+	int MainWindowC::OnTimer(WPARAM wParam, LPARAM lParam) {
+		return reinterpret_cast <_myTimerProc> (wParam)(lParam);
 	}
 
 }

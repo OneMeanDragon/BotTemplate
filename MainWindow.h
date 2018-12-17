@@ -45,6 +45,8 @@ namespace Bot {
 		int OnClose(HWND hWnd);
 		int OnSize(HWND hWnd, WPARAM wParam);
 		int OnNotify(HWND hWnd, WPARAM wParam, LPARAM lParam);
+		int OnTimer(WPARAM wParam, LPARAM lParam);
+
 	};
 
 }
