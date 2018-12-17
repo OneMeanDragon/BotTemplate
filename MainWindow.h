@@ -13,12 +13,14 @@ namespace Bot {
 		HINSTANCE MainInstance;
 		HWND MainHwnd = NULL;
 
-		//Interface windows.
-		HWND mChatInput = NULL;
+		//hModule Richedit
+		HINSTANCE RichEditDLL;
 
 		BOOL mMaximized;
 
 		Bot::Interface::TrayC* Tray = NULL;
+		Bot::Interface::MainInputC* InputBox = NULL;
+
 		wResize* MyWindows = NULL;
 
 	public:

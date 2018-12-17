@@ -1,5 +1,4 @@
 #include "Tray.h"
-#include <string>
 
 namespace Bot
 {

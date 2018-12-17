@@ -22,13 +22,26 @@ namespace Bot {
 		MainHwnd = NULL;
 		MainIcon = NULL;
 
+		//load the richedit dll
+		HINSTANCE RichEditDLL = LoadLibrary("Riched20.dll");
+
 		mMaximized = FALSE;
+
 		Tray = Bot::Interface::TrayC::Instance();
+		InputBox = Bot::Interface::MainInputC::Instance();
+
 		MyWindows = new wResize();
 	}
 	MainWindowC::~MainWindowC() {
 		Bot::Interface::TrayC::Release();
 		Tray = NULL;
+
+		Bot::Interface::MainInputC::Release();
+		InputBox = NULL;
+
+		//Unload the richedit dll
+		FreeLibrary(RichEditDLL);
+		RichEditDLL = NULL;
 
 		delete MyWindows;
 		MyWindows = NULL;
@@ -55,12 +68,8 @@ namespace Bot {
 
 	//Init and run the window
 	void MainWindowC::Run() {
-		HINSTANCE RichEditDLL = LoadLibrary("Riched20.dll");
-
 		//run the dialog window.
 		DialogBox(hInst(), MAKEINTRESOURCE(IDD_MAINFORM), NULL, DialogProc);
-
-		FreeLibrary(RichEditDLL);
 	}
 
 	INT_PTR CALLBACK MainWindowC::DialogProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -76,9 +85,7 @@ namespace Bot {
 		case WM_INITDIALOG: { return Instance()->OnInitalization(hWnd);	}
 		case WM_PAINT: { return Instance()->OnPaint(hWnd); }
 		case WM_CLOSE: { return Instance()->OnClose(hWnd); }
-		case WM_DESTROY: { 
-			PostQuitMessage(0); 
-			break; }
+		case WM_DESTROY: { Instance()->InputBox->KillSubclass(); PostQuitMessage(0); break; }
 		case WM_SIZE: { return Instance()->OnSize(hWnd, wParam); }
 		case WM_NOTIFY: { return Instance()->OnNotify(hWnd, wParam, lParam); }
 
@@ -118,8 +125,10 @@ namespace Bot {
 		SendMessage(hWnd, WM_SETFONT, WPARAM(hFont), TRUE);
 
 		//set windows in the anchor class
-		mChatInput = GetDlgItem(m_hWnd(), IDC_MAININPUTBOX);
-		MyWindows->AddWindow(m_hWnd(), mChatInput, false, true, true, true);
+		InputBox->m_hWnd(GetDlgItem(m_hWnd(), IDC_MAININPUTBOX));
+		MyWindows->AddWindow(m_hWnd(), InputBox->m_hWnd(), false, true, true, true);
+		InputBox->InitSubclass(); //Setup the subclass.
+
 		return TRUE;
 	}
 	int MainWindowC::OnPaint(HWND hWnd) {
@@ -163,4 +172,5 @@ namespace Bot {
 	int MainWindowC::OnNotify(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 		return TRUE;
 	}
+
 }
