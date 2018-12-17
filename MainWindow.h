@@ -42,6 +42,8 @@ namespace Bot {
 		int OnCommand(HWND hWnd, WPARAM wParam, LPARAM lParam);
 		int OnInitalization(HWND hWnd);
 		int OnPaint(HWND hWnd);
+		int OnCTRLColor(WPARAM wParam);
+		int OnTray(HWND hWnd, LPARAM lParam);
 		int OnClose(HWND hWnd);
 		int OnSize(HWND hWnd, WPARAM wParam);
 		int OnNotify(HWND hWnd, WPARAM wParam, LPARAM lParam);

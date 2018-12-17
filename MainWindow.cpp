@@ -78,6 +78,7 @@ namespace Bot {
 
 		switch (message)
 		{
+
 		case WM_TIMER: { return Instance()->OnTimer(wParam, lParam); }
 		case WM_SETFONT: { return TRUE;	}
 		case WM_COMMAND: { return Instance()->OnCommand(hWnd, wParam, lParam); }
@@ -87,22 +88,11 @@ namespace Bot {
 		case WM_DESTROY: { Instance()->InputBox->KillSubclass(); PostQuitMessage(0); break; }
 		case WM_SIZE: { return Instance()->OnSize(hWnd, wParam); }
 		case WM_NOTIFY: { return Instance()->OnNotify(hWnd, wParam, lParam); }
-
-
 		case WM_MOVE: {	return TRUE; }
-		case WM_TRAYMESSAGE: {
-			// Restore the window if it has been clicked in the task bar
-			if (lParam == WM_LBUTTONDOWN || lParam == WM_RBUTTONDOWN) {
-				Instance()->Tray->Restore(hWnd, Instance()->mMaximized);
-			}
-			return TRUE;
-		}
+		case WM_TRAYMESSAGE: { return Instance()->OnTray(hWnd, lParam); }
+		case WM_CTLCOLOREDIT: { return Instance()->OnCTRLColor(wParam); }
+		case WM_CTLCOLORSTATIC: { return Instance()->OnCTRLColor(wParam); }
 
-		case WM_CTLCOLOREDIT:
-		case WM_CTLCOLORSTATIC:
-			SetBkColor((HDC)wParam, 0x000000);
-			SetTextColor((HDC)wParam, 0xFFFFFF);
-			return (BOOL)GetStockObject(BLACK_BRUSH);
 		}
 		//144, 2, 130
 		return FALSE;
@@ -136,6 +126,17 @@ namespace Bot {
 		// All painting occurs here, between BeginPaint and EndPaint.
 		FillRect(hdc, &ps.rcPaint, (HBRUSH)CreateSolidBrush(RGB(0, 0, 0)));
 		EndPaint(hWnd, &ps);
+		return TRUE;
+	}
+	int MainWindowC::OnCTRLColor(WPARAM wParam) {
+		SetBkColor((HDC)wParam, 0x000000);
+		SetTextColor((HDC)wParam, 0xFFFFFF);
+		return (BOOL)GetStockObject(BLACK_BRUSH);
+	}
+	int MainWindowC::OnTray(HWND hWnd, LPARAM lParam) {
+		if (lParam == WM_LBUTTONDOWN || lParam == WM_RBUTTONDOWN) {
+			Instance()->Tray->Restore(hWnd, Instance()->mMaximized);
+		}
 		return TRUE;
 	}
 	int MainWindowC::OnClose(HWND hWnd) {
