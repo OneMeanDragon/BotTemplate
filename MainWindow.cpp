@@ -125,10 +125,11 @@ namespace Bot {
 		InputBox->m_hWnd(GetDlgItem(m_hWnd(), IDC_MAININPUTBOX));
 		MyWindows->AddWindow(m_hWnd(), InputBox->m_hWnd(), false, true, true, true);
 		InputBox->InitSubclass(); //Setup the subclass.
+		Bot::Interface::InputBox::SetText(InputBox->m_hWnd(), (char *)("Window Template"));
 
 		//set temp timer
 		MyTimer1->Start(500, m_hWnd(), (Instance()->TmpTimerProc));
-		MyTimer2->Start(500, m_hWnd(), (Instance()->TmpTimerProc2));
+		MyTimer2->Start(1500, m_hWnd(), (Instance()->TmpTimerProc2));
 		return TRUE;
 	}
 	int MainWindowC::OnPaint(HWND hWnd) {

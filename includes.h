@@ -11,12 +11,15 @@
 #define TRAY_ICONUID	100				
 #define WM_TRAYMESSAGE	(WM_USER + 1)
 
+#define MAX_INPUT 256
+
 typedef BOOL(WINAPI* _myTimerProc)(LPARAM lParam);
 
 //Custom includes
 #include "wResize.h"
 #include "MainInputC.h"
 #include "wTimer.h"
+#include "Tray.h"
 
 #endif
 

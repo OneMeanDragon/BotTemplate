@@ -32,6 +32,15 @@ namespace Bot
 
 		};
 
+		namespace InputBox
+		{
+
+			void SetText(HWND hWnd, char *text);
+			void GetText(HWND hWnd, char *text);
+			void AppendText(HWND hWnd, char *text);
+
+		}
+
 	}
 }
 

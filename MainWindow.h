@@ -1,7 +1,7 @@
 #ifndef _MAINWINDOW_H
 #define _MAINWINDOW_H
 
-#include "Tray.h"
+#include "includes.h"
 
 
 namespace Bot {

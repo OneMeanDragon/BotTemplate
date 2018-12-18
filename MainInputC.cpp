@@ -49,6 +49,26 @@ namespace Bot
 			return CallWindowProc(Instance()->EditBoxOldWndProc, EditBox, uMsg, wParam, lParam);
 		}
 
+		namespace InputBox
+		{
+
+			void SetText(HWND hWnd, char *text) {
+				SetWindowText(hWnd, text);
+			}
+
+			void GetText(HWND hWnd, char *text) {
+				GetWindowText(hWnd, text, MAX_INPUT);
+			}
+
+			void AppendText(HWND hWnd, char *text) {
+				char buffer[MAX_INPUT] = "";
+				GetWindowText(hWnd, buffer, sizeof(buffer));
+				sprintf_s(buffer, "%s%s", buffer, text);
+				SetWindowText(hWnd, buffer);
+			}
+
+		}
+
 	}
 }
 
