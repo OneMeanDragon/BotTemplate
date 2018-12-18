@@ -10,3 +10,5 @@ MainInputC - Singleton class for the main input box on the main window (subclass
 
 wTimer - Multi purpos window timer class.
 
+gAppData - Singleton Global Data Class.
+
