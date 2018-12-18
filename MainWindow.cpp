@@ -32,6 +32,7 @@ namespace Bot {
 
 		MyWindows = new wResize();
 		MyTimer1 = new Bot::Interface::wTimer();
+		MyTimer2 = new Bot::Interface::wTimer();
 	}
 	MainWindowC::~MainWindowC() {
 		Bot::Interface::TrayC::Release();
@@ -49,6 +50,8 @@ namespace Bot {
 
 		delete MyTimer1;
 		MyTimer1 = NULL;
+		delete MyTimer2;
+		MyTimer2 = NULL;
 
 	}
 
@@ -125,6 +128,7 @@ namespace Bot {
 
 		//set temp timer
 		MyTimer1->Start(500, m_hWnd(), (Instance()->TmpTimerProc));
+		MyTimer2->Start(500, m_hWnd(), (Instance()->TmpTimerProc2));
 		return TRUE;
 	}
 	int MainWindowC::OnPaint(HWND hWnd) {
@@ -184,7 +188,12 @@ namespace Bot {
 	}
 	BOOL WINAPI MainWindowC::TmpTimerProc(LPARAM lParam)
 	{
-		OutputDebugString("Timer: Tick.\r\n");
+		OutputDebugString("TmpTimerProc: Tick.\r\n");
+		return TRUE;
+	}
+	BOOL WINAPI MainWindowC::TmpTimerProc2(LPARAM lParam)
+	{
+		OutputDebugString("TmpTimerProc2: Tick.\r\n");
 		return TRUE;
 	}
 }

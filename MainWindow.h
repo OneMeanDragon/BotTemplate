@@ -23,6 +23,7 @@ namespace Bot {
 
 		wResize* MyWindows = NULL;
 		Bot::Interface::wTimer* MyTimer1;
+		Bot::Interface::wTimer* MyTimer2;
 
 
 	public:
@@ -38,6 +39,7 @@ namespace Bot {
 
 		//temp timer
 		static BOOL WINAPI TmpTimerProc(LPARAM lParam);
+		static BOOL WINAPI TmpTimerProc2(LPARAM lParam);
 
 	private:
 		MainWindowC();

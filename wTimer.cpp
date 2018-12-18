@@ -15,12 +15,16 @@ namespace Bot
 
 		wTimer::~wTimer()
 		{
+			if (mHwnd != NULL && wProcess != NULL) {
+				KillTimer(mHwnd, (UINT_PTR)wProcess);
+			}
+
 			mInterval = 0;
 			wProcess = NULL;
 			mHwnd = NULL;
 		}
 
-		void wTimer::Start(UINT32 i_Interval, const HWND mWindow, _myTimerProc pFunct)
+		void wTimer::Start(UINT32 i_Interval, const HWND mWindow, const _myTimerProc pFunct)
 		{
 			mInterval = i_Interval;
 			wProcess = pFunct; //reinterpret_cast <_myTimerProc>(pFunct); //pFunct;

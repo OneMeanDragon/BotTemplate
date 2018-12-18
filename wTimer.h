@@ -20,7 +20,7 @@ namespace Bot
 			wTimer();
 			~wTimer();
 
-			void Start(UINT32 i_Interval, const HWND mWindow, _myTimerProc pFunct);
+			void Start(UINT32 i_Interval, const HWND mWindow, const _myTimerProc pFunct);
 			void Stop();
 			void Reset();
 
