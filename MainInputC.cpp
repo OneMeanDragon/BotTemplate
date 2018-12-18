@@ -15,8 +15,6 @@ namespace Bot
 		}
 
 		void MainInputC::Release() {
-			//check if the window != NULL, and kill it if true
-			//kill our instanced class
 			delete sInstance;
 			sInstance = NULL;
 		}

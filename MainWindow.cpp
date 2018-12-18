@@ -31,6 +31,7 @@ namespace Bot {
 		InputBox = Bot::Interface::MainInputC::Instance();
 
 		MyWindows = new wResize();
+		MyTimer1 = new Bot::Interface::wTimer();
 	}
 	MainWindowC::~MainWindowC() {
 		Bot::Interface::TrayC::Release();
@@ -45,6 +46,10 @@ namespace Bot {
 
 		delete MyWindows;
 		MyWindows = NULL;
+
+		delete MyTimer1;
+		MyTimer1 = NULL;
+
 	}
 
 	//Applications Hinstance
@@ -118,6 +123,8 @@ namespace Bot {
 		MyWindows->AddWindow(m_hWnd(), InputBox->m_hWnd(), false, true, true, true);
 		InputBox->InitSubclass(); //Setup the subclass.
 
+		//set temp timer
+		MyTimer1->Start(500, m_hWnd(), (Instance()->TmpTimerProc));
 		return TRUE;
 	}
 	int MainWindowC::OnPaint(HWND hWnd) {
@@ -175,5 +182,9 @@ namespace Bot {
 	int MainWindowC::OnTimer(WPARAM wParam, LPARAM lParam) {
 		return reinterpret_cast <_myTimerProc> (wParam)(lParam);
 	}
-
+	BOOL WINAPI MainWindowC::TmpTimerProc(LPARAM lParam)
+	{
+		OutputDebugString("Timer: Tick.\r\n");
+		return TRUE;
+	}
 }

@@ -22,6 +22,8 @@ namespace Bot {
 		Bot::Interface::MainInputC* InputBox = NULL;
 
 		wResize* MyWindows = NULL;
+		Bot::Interface::wTimer* MyTimer1;
+
 
 	public:
 		static MainWindowC* Instance();
@@ -33,6 +35,9 @@ namespace Bot {
 		HWND m_hWnd();
 
 		void Run();
+
+		//temp timer
+		static BOOL WINAPI TmpTimerProc(LPARAM lParam);
 
 	private:
 		MainWindowC();
@@ -48,6 +53,7 @@ namespace Bot {
 		int OnSize(HWND hWnd, WPARAM wParam);
 		int OnNotify(HWND hWnd, WPARAM wParam, LPARAM lParam);
 		int OnTimer(WPARAM wParam, LPARAM lParam);
+
 
 	};
 
