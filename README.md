@@ -8,3 +8,5 @@ wResize - Used for auto resizeing, auto moving the interface child windows. (C++
 
 MainInputC - Singleton class for the main input box on the main window (subclass).
 
+wTimer - Multi purpos timer class.
+
