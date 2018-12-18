@@ -112,6 +112,9 @@ namespace Bot {
 	}
 	int MainWindowC::OnInitalization(HWND hWnd)
 	{
+		//set started time.
+		//TODO
+
 		//set icon
 		MainIcon = LoadIcon(hInst(), MAKEINTRESOURCE(IDI_ICON1));
 		SendMessage(hWnd, WM_SETICON, ICON_SMALL, (LPARAM)MainIcon);

@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <vector>
 #include <string>
+#include <chrono>
 
 
 #include "resource.h"
@@ -16,10 +17,10 @@
 typedef BOOL(WINAPI* _myTimerProc)(LPARAM lParam);
 
 //Custom includes
+#include "gAppData.h"
 #include "wResize.h"
 #include "MainInputC.h"
 #include "wTimer.h"
 #include "Tray.h"
 
 #endif
-
