@@ -22,5 +22,7 @@ typedef BOOL(WINAPI* _myTimerProc)(LPARAM lParam);
 #include "MainInputC.h"
 #include "wTimer.h"
 #include "Tray.h"
+#include "mMenu.h"
+#include "mColors.h"
 
 #endif

@@ -144,8 +144,8 @@ namespace Bot {
 		return TRUE;
 	}
 	int MainWindowC::OnCTRLColor(WPARAM wParam) {
-		SetBkColor((HDC)wParam, 0x000000);
-		SetTextColor((HDC)wParam, 0xFFFFFF);
+		SetBkColor((HDC)wParam, Common::ColorByName("black"));
+		SetTextColor((HDC)wParam, Common::ColorByName("white"));
 		return (BOOL)GetStockObject(BLACK_BRUSH);
 	}
 	int MainWindowC::OnTray(HWND hWnd, LPARAM lParam) {
