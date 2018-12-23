@@ -6,7 +6,7 @@
 namespace Common
 {
 
-	COLORREF ColorByName(std::string name);
+	COLORREF ColorByName(const std::string name);
 
 }
 
