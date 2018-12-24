@@ -142,6 +142,10 @@ namespace Bot {
 	}
 	int MainWindowC::OnInitalization(HWND hWnd)
 	{
+		//set menu.
+		MyMenu->m_hWnd(m_hWnd());
+		MyWindows->AddMenuHeight(m_hWnd());
+
 		//set icon
 		MainIcon = LoadIcon(hInst(), MAKEINTRESOURCE(IDI_ICON1));
 		SendMessage(hWnd, WM_SETICON, ICON_SMALL, (LPARAM)MainIcon);
@@ -156,10 +160,6 @@ namespace Bot {
 		MyWindows->AddWindow(m_hWnd(), InputBox->m_hWnd(), false, true, true, true);
 		InputBox->InitSubclass(); //Setup the subclass.
 		Bot::Interface::InputBox::SetText(InputBox->m_hWnd(), (char *)("Window Template"));
-
-		//set menu.
-		MyMenu->m_hWnd(m_hWnd());
-
 
 		//set temp timer
 		MyTimer1->Start(500, m_hWnd(), (Instance()->TmpTimerProc));
