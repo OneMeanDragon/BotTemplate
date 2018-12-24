@@ -50,10 +50,14 @@ namespace Bot
 		}
 
 		BOOL WINAPI mMenu::TmpOnEditProc(LPARAM lParam) {
+			OutputDebugString("You have clicked EDIT in the menu.\r\n\r\n");
+
 			return TRUE;
 		}
 
 		BOOL WINAPI mMenu::TmpOnFileProc(LPARAM lParam) {
+			OutputDebugString("You have clicked FILE in the menu.\r\n\r\n");
+
 			return TRUE;
 		}
 

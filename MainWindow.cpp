@@ -93,7 +93,7 @@ namespace Bot {
 
 		case WM_TIMER: { return Instance()->OnTimer(wParam, lParam); }
 		case WM_SETFONT: { return TRUE;	}
-		case WM_COMMAND: { return Instance()->OnCommand(hWnd, wParam, lParam); }
+		case WM_COMMAND: { if (lParam != 0) { return TRUE; } return Instance()->OnCommand(hWnd, wParam, lParam); }
 		case WM_INITDIALOG: { return Instance()->OnInitalization(hWnd);	}
 		case WM_PAINT: { return Instance()->OnPaint(hWnd); }
 		case WM_CLOSE: { return Instance()->OnClose(hWnd); }
@@ -111,7 +111,23 @@ namespace Bot {
 	}
 	int MainWindowC::OnCommand(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	{
-		if (lParam != 0) { return TRUE; } //Window messages flying through the WM_COMMAND procedure..
+		//wCommand dosent mean a damn to me at this point now.
+		WORD wCommand = LOWORD(wParam);
+		//HWND wValidate = GetDlgItem(m_hWnd(), wCommand);
+		//if (wValidate == (HWND)lParam && lParam != 0)
+		//{
+			//WORD wCommand2 = HIWORD(wParam);
+			//EN_SETFOCUS;  0x0100 - 256
+			//EN_KILLFOCUS; 0x0200 - 512
+			//EN_CHANGE; 0x0300 - 768
+			//EN_UPDATE; 0x0400 - 1024
+			//window command message.
+		//	std::string outdata = "OnCommand: \r\n hWnd (" + std::to_string((DWORD)wValidate) + ") \r\n LPARAM (" + std::to_string((UINT64)lParam) + ") \r\n HICMD(" + std::to_string((UINT64)HIWORD(wParam)) + ")\r\n\r\n";
+		//	OutputDebugString(outdata.c_str());
+		//	return TRUE;
+		//}
+		//if (lParam != 0) { return TRUE; } //Window messages flying through the WM_COMMAND procedure..
+		//The above is blocked at the dialog proc level now.
 
 		WORD wP1, wP2 = 0;
 		wP1 = LOWORD(wParam);
@@ -120,8 +136,9 @@ namespace Bot {
 		std::string outdata = "OnCommand: \r\n hWnd (" + std::to_string((DWORD)hWnd) + ") \r\n WPARAM (" + std::to_string((UINT64)wParam) + ") \r\n LPARAM (" + std::to_string((UINT64)lParam) + ") \r\n" + std::to_string((UINT64)wP1) + "  \r\n" + std::to_string((UINT64)wP2) + ") \r\n\r\n";
 		OutputDebugString(outdata.c_str());
 
-		WORD wCommand = LOWORD(wParam);
-		return TRUE; //OTHERWISE WE NEED A RETURN RESULT
+		//return TRUE; //OTHERWISE WE NEED A RETURN RESULT
+		//WM_COMMAND holds the function pointer similar to WM_TIMER
+		return reinterpret_cast <_myMenuProc> (wParam)(lParam);
 	}
 	int MainWindowC::OnInitalization(HWND hWnd)
 	{
