@@ -139,13 +139,13 @@ namespace Bot {
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 		// All painting occurs here, between BeginPaint and EndPaint.
-		FillRect(hdc, &ps.rcPaint, (HBRUSH)CreateSolidBrush(RGB(0, 0, 0)));
+		FillRect(hdc, &ps.rcPaint, (HBRUSH)CreateSolidBrush(Common::DefColors::BLACK));
 		EndPaint(hWnd, &ps);
 		return TRUE;
 	}
 	int MainWindowC::OnCTRLColor(WPARAM wParam) {
-		SetBkColor((HDC)wParam, Common::ColorByName("black"));
-		SetTextColor((HDC)wParam, Common::ColorByName("white"));
+		SetBkColor((HDC)wParam, Common::DefColors::BLACK);
+		SetTextColor((HDC)wParam, Common::DefColors::WHITE);
 		return (BOOL)GetStockObject(BLACK_BRUSH);
 	}
 	int MainWindowC::OnTray(HWND hWnd, LPARAM lParam) {
