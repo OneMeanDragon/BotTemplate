@@ -43,8 +43,8 @@ namespace Bot
 
 		//MainWindow InputBox subclass.
 		LRESULT CALLBACK MainInputC::EditBoxSubclass(HWND EditBox, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-			std::string OutData = "uMsg: " + std::to_string(uMsg) + " \r\n";
-			OutputDebugString(OutData.c_str());
+			//std::string OutData = "uMsg: " + std::to_string(uMsg) + " \r\n";
+			//OutputDebugString(OutData.c_str());
 			
 			return CallWindowProc(Instance()->EditBoxOldWndProc, EditBox, uMsg, wParam, lParam);
 		}

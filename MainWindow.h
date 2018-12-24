@@ -25,6 +25,8 @@ namespace Bot {
 		Bot::Interface::wTimer* MyTimer1;
 		Bot::Interface::wTimer* MyTimer2;
 
+		Bot::Interface::mMenu* MyMenu = NULL;
+
 
 	public:
 		static MainWindowC* Instance();

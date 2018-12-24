@@ -27,6 +27,7 @@ namespace Bot {
 
 		mMaximized = FALSE;
 
+		MyMenu = Bot::Interface::mMenu::Instance();
 		Tray = Bot::Interface::TrayC::Instance();
 		InputBox = Bot::Interface::MainInputC::Instance();
 
@@ -35,6 +36,9 @@ namespace Bot {
 		MyTimer2 = new Bot::Interface::wTimer();
 	}
 	MainWindowC::~MainWindowC() {
+		Bot::Interface::mMenu::Release();
+		MyMenu = NULL;
+
 		Bot::Interface::TrayC::Release();
 		Tray = NULL;
 
@@ -107,14 +111,20 @@ namespace Bot {
 	}
 	int MainWindowC::OnCommand(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	{
+		if (lParam != 0) { return TRUE; } //Window messages flying through the WM_COMMAND procedure..
+
+		WORD wP1, wP2 = 0;
+		wP1 = LOWORD(wParam);
+		wP2 = HIWORD(wParam);
+
+		std::string outdata = "OnCommand: \r\n hWnd (" + std::to_string((DWORD)hWnd) + ") \r\n WPARAM (" + std::to_string((UINT64)wParam) + ") \r\n LPARAM (" + std::to_string((UINT64)lParam) + ") \r\n" + std::to_string((UINT64)wP1) + "  \r\n" + std::to_string((UINT64)wP2) + ") \r\n\r\n";
+		OutputDebugString(outdata.c_str());
+
 		WORD wCommand = LOWORD(wParam);
 		return TRUE; //OTHERWISE WE NEED A RETURN RESULT
 	}
 	int MainWindowC::OnInitalization(HWND hWnd)
 	{
-		//set started time.
-		//TODO
-
 		//set icon
 		MainIcon = LoadIcon(hInst(), MAKEINTRESOURCE(IDI_ICON1));
 		SendMessage(hWnd, WM_SETICON, ICON_SMALL, (LPARAM)MainIcon);
@@ -129,6 +139,10 @@ namespace Bot {
 		MyWindows->AddWindow(m_hWnd(), InputBox->m_hWnd(), false, true, true, true);
 		InputBox->InitSubclass(); //Setup the subclass.
 		Bot::Interface::InputBox::SetText(InputBox->m_hWnd(), (char *)("Window Template"));
+
+		//set menu.
+		MyMenu->m_hWnd(m_hWnd());
+
 
 		//set temp timer
 		MyTimer1->Start(500, m_hWnd(), (Instance()->TmpTimerProc));
@@ -192,12 +206,12 @@ namespace Bot {
 	}
 	BOOL WINAPI MainWindowC::TmpTimerProc(LPARAM lParam)
 	{
-		OutputDebugString("TmpTimerProc: Tick.\r\n");
+		//OutputDebugString("TmpTimerProc: Tick.\r\n");
 		return TRUE;
 	}
 	BOOL WINAPI MainWindowC::TmpTimerProc2(LPARAM lParam)
 	{
-		OutputDebugString("TmpTimerProc2: Tick.\r\n");
+		//OutputDebugString("TmpTimerProc2: Tick.\r\n");
 		return TRUE;
 	}
 }

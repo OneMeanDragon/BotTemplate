@@ -13,14 +13,24 @@ namespace Bot
 		{
 		private:
 			static mMenu* sInstance;
-			HMENU mhMenu;
+			HMENU mhMenu = nullptr;
+			HWND mhWnd = nullptr;
+
+			_myMenuProc MyFileProc = NULL;
+			_myMenuProc MyEditProc = NULL;
 
 		public:
 			static mMenu* Instance();
-			void Release();
+			static void Release();
 
-			void m_hMenu(const HMENU hMenu);
+			void m_hMenu(HMENU hMenu);
 			HMENU m_hMenu();
+			void m_hWnd(HWND hWnd);
+			HWND m_hWnd();
+
+			static BOOL WINAPI TmpOnFileProc(LPARAM lParam);
+			static BOOL WINAPI TmpOnEditProc(LPARAM lParam);
+
 
 		private:
 			mMenu();

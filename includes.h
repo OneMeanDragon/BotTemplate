@@ -15,6 +15,7 @@
 #define MAX_INPUT 256
 
 typedef BOOL(WINAPI* _myTimerProc)(LPARAM lParam);
+typedef BOOL(WINAPI* _myMenuProc)(LPARAM lParam);
 
 //Custom includes
 #include "gAppData.h"
