@@ -12,3 +12,5 @@ wTimer - Multi purpos window timer class.
 
 gAppData - Singleton Global Data Class.
 
+mMenu - Singleton class for Menu Item Clicks.
+
