@@ -3,8 +3,9 @@
 namespace Common
 {
 
-	COLORREF ColorByName(const std::string name)
+	COLORREF ColorByName(const char* cname)
 	{
+		std::string name = std::string(cname);
 		//Most common colors up top.
 		if (name == "black")			{ return (COLORREF)0x000000L; }
 		if (name == "white")			{ return (COLORREF)0xffffffL; }
