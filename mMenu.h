@@ -44,7 +44,7 @@ namespace Bot
 			HWND m_hWnd();
 
 			static BOOL WINAPI TmpOnFileProc(LPARAM lParam);
-			static BOOL WINAPI TmpOnFileExitProc(LPARAM lParam);
+			static BOOL WINAPI FileExitProc(LPARAM lParam);
 			static BOOL WINAPI TmpOnEditProc(LPARAM lParam);
 
 

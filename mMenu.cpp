@@ -101,7 +101,7 @@ namespace Bot
 			SetMenuInfo(m_hMenu(), &mi);
 
 			MyFileProc = TmpOnFileProc;
-			MyFileExitProc = TmpOnFileExitProc;
+			MyFileExitProc = FileExitProc;
 			MyEditProc = TmpOnEditProc;
 		}
 
@@ -132,9 +132,13 @@ namespace Bot
 			return TRUE;
 		}
 
-		BOOL WINAPI mMenu::TmpOnFileExitProc(LPARAM lParam) {
+		BOOL WINAPI mMenu::FileExitProc(LPARAM lParam) {
 			OutputDebugString("You have clicked EXIT in the menu.\r\n\r\n");
-
+			if (MessageBox(Instance()->m_hWnd(), TEXT("Are you sure you want to exit?"), TEXT("Question:"), MB_YESNO) == IDYES)
+			{
+				if (Bot::Interface::TrayC::Instance()->InTray()) { Bot::Interface::TrayC::Instance()->Remove(Instance()->m_hWnd()); }
+				return DestroyWindow(Instance()->m_hWnd());
+			}
 			return TRUE;
 		}
 
