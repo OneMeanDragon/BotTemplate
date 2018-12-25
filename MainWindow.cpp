@@ -93,7 +93,7 @@ namespace Bot {
 
 		case WM_TIMER: { return Instance()->OnTimer(wParam, lParam); }
 		case WM_SETFONT: { return TRUE;	}
-		case WM_COMMAND: { if (lParam != 0) { return TRUE; } return Instance()->OnCommand(hWnd, wParam, lParam); }
+		case WM_COMMAND: { if (lParam != 0 || ((UINT64)wParam < 3) ) { return TRUE; } return Instance()->OnCommand(hWnd, wParam, lParam); }
 		case WM_INITDIALOG: { return Instance()->OnInitalization(hWnd);	}
 		case WM_PAINT: { return Instance()->OnPaint(hWnd); }
 		case WM_CLOSE: { return Instance()->OnClose(hWnd); }

@@ -3,6 +3,20 @@
 
 #include "includes.h"
 
+namespace Common
+{
+
+	void InsertPopMenu(HMENU hMenu, UINT pos, _myMenuProc pFunc, LPCSTR strMenuName);
+	void AddMenu(HMENU hMenu, _myMenuProc pFunc, LPCSTR strMenuName);
+	void AddPopMenu(HMENU hMenu, _myMenuProc pFunc, LPCSTR strMenuName);
+	void AddSubMenu(HMENU hMenu, _myMenuProc pFunc, LPCSTR strMenuName, LPCSTR strSubMenuName);
+	void AddSubMenuSubMenu(HMENU hMenu, _myMenuProc pFunc, LPCSTR strMainName, LPCSTR strSubMainName, LPCSTR strSubName);
+	void AddSubPopMenu(HMENU hMenu, _myMenuProc pFunc, LPCSTR strMenuName, LPCSTR strSubMenuName);
+	HMENU FindMenu(const HMENU hMainMenu, const LPCSTR byName);
+
+
+}
+
 namespace Bot
 {
 
@@ -17,6 +31,7 @@ namespace Bot
 			HWND mhWnd = nullptr;
 
 			_myMenuProc MyFileProc = NULL;
+			_myMenuProc MyFileExitProc = NULL;
 			_myMenuProc MyEditProc = NULL;
 
 		public:
@@ -29,6 +44,7 @@ namespace Bot
 			HWND m_hWnd();
 
 			static BOOL WINAPI TmpOnFileProc(LPARAM lParam);
+			static BOOL WINAPI TmpOnFileExitProc(LPARAM lParam);
 			static BOOL WINAPI TmpOnEditProc(LPARAM lParam);
 
 
