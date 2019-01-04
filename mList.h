@@ -3,15 +3,20 @@
 
 namespace Common {
 
+	typedef struct iNode {
+		unsigned int index;
+		iNode* next;
+	} *iNodePtr;
+
 	class mList {
 	private:
 		typedef struct node {
-			uint32_t index;
+			unsigned int index;
 			// internal guts //
 			node* next;
 		} *nodePtr;
 
-		uint32_t item_counter;
+		unsigned int item_counter;
 		nodePtr head;
 		nodePtr curr;
 		nodePtr temp;
@@ -23,7 +28,27 @@ namespace Common {
 		void AddNode(int addData);
 		void DeleteNode(int mIndex);
 		void PrintList();
-		uint32_t Length();
+		unsigned int Length();
+
+	};
+
+	class IndexedList {
+	private:
+		unsigned int item_counter;
+		iNodePtr mHead;
+		iNodePtr mCurrent;
+		iNodePtr mTemp;
+
+		void UpdateListIndex(iNodePtr nTemp);
+
+	public:
+		IndexedList();
+		~IndexedList();
+
+		void AddItem(); //temp add
+		void DeleteItem(unsigned int mIndex);
+		void PrintAll();
+		unsigned int Length();
 
 	};
 
